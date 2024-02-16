@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Employee</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    function updateEmp(){
+        var empName = $('#empName').val();
+        var addLine1 = $('#addLine1').val();
+        var addLine2 = $('#addLine2').val();
+        var city = $('#city').val();
+        var zipcode = $('#zipcode').val();
+
+        /* if($(empName).length<3) {
+             alert("Name length must be greater than 3");
+         }
+         if(zipcode.length!==6 || isNaN(zipcode)) {
+             alert("ZipCode is incorrect");
+         }*/
+        var formData ={
+            name:empName,
+            addLine1:addLine1,
+            addLine2:addLine2,
+            city:city,
+            zipcode:zipcode
+        };
+        $.ajax({
+            url:"http://localhost:8080/updateEmp",
+            type:'PUT',
+            contentType:'application/json',
+            data:JSON.stringify(formData),
+            success:function () {
+                alert("Inserted");
+            },
+            error:function () {
+                alert("Failed");
+            }
+        });
+    }
+    function deleteEmp() {
+        $.ajax({
+            url: "http://localhost:8080/deleteEmp/"+id,
+            type: 'DELETE',
+            success:function () {
+                alert("deleted");
+            },
+            error:function () {
+                alert("Failed");
+            }
+        });
+    }
+</script>
+<div id = "divBody"></div>
+<script>
+    $(document).ready(function(){
+        var id = localStorage.getItem("empId");
+        $.get("http://localhost:8080/getEmpById/"+id, function (employee) {
+            var empName = employee.name;
+            var addLine1 = employee.addLine1;
+            var addLine2 = employee.addLine2;
+            var zipcode = employee.zipcode;
+            $('#divBody').html(`
+    Employee Name : <input type = "text" name = "empName" id="empName" value="${employee.name}">
+    Address Line 1 : <input type = "text" name = "addLine1" id="addLine1" value="${employee.addLine1}">
+    Address Line 2 : <input type = "text" name = "addLine2" id="addLine2" value="${employee.addLine2}">
+    City : <input type ="text" name="city" id="city" value="${employee.city}">
+    Zip Code : <input type ="text" name="zipcode" id="zipcode"${employee.zipcode}" >
+    <input type="button" onclick="updateEmp()" value="update Employee">
+    <input type = "button" onclick="deleteEmp()" value="delete Employee">`)
+        });
+});
+
+</script>
+</body>
+</html>

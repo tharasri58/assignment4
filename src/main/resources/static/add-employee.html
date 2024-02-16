@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<form>
+    Employee Name : <input type = "text" name = "empName" id="empName">
+    <strong>Address: <br></strong>
+    Address Line 1 : <input type = "text" name = "addLine1" id="addLine1">
+    Address Line 2 : <input type = "text" name = "addLine2" id="addLine2">
+    City : <input type ="text" name="city" id="city">
+    Zip Code : <input type ="text" name="zipcode" id="zipcode">
+    <input type="button" onclick="insertEmp()" value="Add Employee">
+</form>
+<script>
+    function insertEmp() {
+        var empName = $('#empName').val();
+        var addLine1 = $('#addLine1').val();
+        var addLine2 = $('#addLine2').val();
+        var city = $('#city').val();
+        var zipcode = $('#zipcode').val();
+
+       /* if($(empName).length<3) {
+            alert("Name length must be greater than 3");
+        }
+        if(zipcode.length!==6 || isNaN(zipcode)) {
+            alert("ZipCode is incorrect");
+        }*/
+        var formData ={
+            name:empName,
+            addLine1:addLine1,
+            addLine2:addLine2,
+            city:city,
+            zipcode:zipcode
+        };
+        $.ajax({
+            url:"http://localhost:8080/addEmp",
+            type:'POST',
+            contentType:'application/json',
+            data:JSON.stringify(formData),
+            success:function () {
+              alert("Inserted");
+            },
+            error:function () {
+                alert("Failed");
+            }
+        });
+    }
+</script>
+</body>
+</html>

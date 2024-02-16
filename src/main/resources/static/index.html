@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Employee</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<form>
+Employee NUmber <input type = "number" name = "empId" id="empId">
+    <input type ="button" onclick="viewEmp()" value="view Employee">
+    <input type ="button" onclick="addEmp()" value="Add Employee">
+</form>
+<script>
+    function viewEmp() {
+        var empId=$("#empId").val();
+        localStorage.setItem("empId",empId);
+        window.location.href="view-employee.html"
+    }
+    function addEmp() {
+        window.location.href="add-employee.html"
+    }
+</script>
+</body>
+</html>
